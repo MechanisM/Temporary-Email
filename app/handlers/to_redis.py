@@ -19,13 +19,15 @@ class Transform(object):
 
 class AutoLink(Transform):
     def __init__(self):
-        self.regexp = re.compile(r'([^"])\b((http|https)://[^ \t\n\r<>\(\)&"]+'\
-                                 r'[^ \t\n\r<>\(\)&"\.])')
+        self.regexp = re.compile(r'([^"])\b((http|https)://[^ \t\n\r<>\(\)&"]+' r'[^ \t\n\r<>\(\)&"\.])')
 
     def replace(self, match):
         url = match.group(2)
         return match.group(1) + '<a target="_blank" href="%s">%s</a>' % (url, url)
 
+def xhtml_escape(value):
+    import xml.sax.saxutils
+    return xml.sax.saxutils.escape(value, {'"': "&quot;"})
 
 @route("(to)@(host)", to=".+", host=".+")
 @stateless
@@ -42,8 +44,8 @@ def START(message, to=None, host=None):
     r = redis.Redis()
     r.publish("new_email", json.dumps({
         "to": "%s@%s" % (to, host),
-        "from": message["from"],
-        "subject": message["subject"],
+        "from": xhtml_escape(message["from"]),
+        "subject": xhtml_escape(message["subject"]),
         "body": mess,
         "created": time.time()
     }))
