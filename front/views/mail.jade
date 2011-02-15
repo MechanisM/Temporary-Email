@@ -1,0 +1,35 @@
+:javascript
+  | var email = "#{email}";
+  | var is_empty = #{!data.length};
+- if (!data.length)
+  .nomail Empty Inbox
+  p.nomail when email received page will update automaticly
+
+ul#mailbox
+  - each item in data
+    li
+      span.from= item.from
+      = " "
+      span.subject= item.subject
+      = " "
+      .body
+        span.body!= item.body.slice(0, 300)
+        span.body.after.hide!= item.body.slice(300)
+        = " "
+        - if (item.body.length>300)
+          a.more= "[ more ]"
+          a.less.hide= "[ less ]"
+        
+        
+
+li.template.hide
+  span.from
+  = " "
+  span.subject
+  = " "
+  .body
+    span.body
+    span.body.after.hide
+    = " "
+    a.more
+    a.less.hide= "[ less ]"

@@ -1,0 +1,13 @@
+syntax: glob
+*.pyc
+*.db
+*.sql
+*.log
+*.err
+*.out
+**.idea**
+**fabfile_settings.py
+**local_settings.py
+.monitor
+*.pid
+fabfile.py

@@ -1,0 +1,7 @@
+h2 Just type name below to create email available for 1 hour
+form(action="/read/")
+  input.m#t_mail(placeholder="name", autofocus)
+  input.m#r_mail(type="hidden", name="email", placeholder="name", autofocus)
+  span.m @m.tutamc.com
+  .create
+    input.submit(type="submit", value="create")
